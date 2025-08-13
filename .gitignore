@@ -1,0 +1,26 @@
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.env
+.env.*
+.DS_Store
+processed_data/
+raw_data/
+*.csv
+*.onnx
+*.h5
+*.pt
+.ipynb_checkpoints/
+.idea/
+.vscode/
+*.log
+*.sqlite3
+*.db
+
+# VS Code
+.vscode/
+
+# OS files
+Thumbs.db
