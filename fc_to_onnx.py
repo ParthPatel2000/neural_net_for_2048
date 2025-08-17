@@ -7,7 +7,8 @@ import pandas as pd
 import numpy as np
 import os
 
-# === 5. Define model ===
+
+# === 1. Define model ===
 class Net(nn.Module):
     def __init__(self):
         super().__init__()
@@ -21,24 +22,23 @@ class Net(nn.Module):
         x = torch.relu(self.fc2(x))
         x = torch.relu(self.fc3(x))
         return self.fc4(x)  # raw scores for each move
-
-
+    
 model = Net()  # your model class
-model.load_state_dict(torch.load("model_2048.pt"))
+model.load_state_dict(torch.load("trained_models/cnn_model_2048.pt"))
 model.eval()
 
-dummy_input = torch.randn(1, 20)  # batch size 1, 20 features (your board input size)
+dummy_input = torch.randn(1, 20)  # batch size 1, 20 input features
 torch.onnx.export(
     model,
     dummy_input,
-    "Onnx_models/temp.onnx",
+    "Onnx_models/tempFC.onnx",
     input_names=["input"],
     output_names=["output"],
-    dynamo=True  # <-- add this flag to enable new exporter
+    dynamo=True,  # <-- add this flag to enable new exporter
 )
 
-onnx_model = onnx.load("Onnx_models/temp.onnx")
-onnx.save(onnx_model, "Onnx_models/model_2048_for_js.onnx", save_as_external_data=False)
+onnx_model = onnx.load("Onnx_models/tempFC.onnx")
+onnx.save(onnx_model, "Onnx_models/FC_model_2048_for_js.onnx", save_as_external_data=False)
 
-os.remove('Onnx_models/temp.onnx')
-os.remove('Onnx_models/temp.onnx.data')
+os.remove("Onnx_models/tempFC.onnx")
+os.remove("Onnx_models/tempFC.onnx.data")
