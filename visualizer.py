@@ -3,6 +3,7 @@ import sys, signal
 from game_engine import GameEngine
 from heuristics_ai import get_move
 from tabular_qlearning import QLearningAgent
+import deep_Q_learning
 
 pygame.init()
 
